@@ -38,10 +38,17 @@ src/test/java/com/qacart/todo
 ├── config
 ├── data
 ├── models
-├── Steps
+├── steps
 └── testCases
+
+```
+
+---
 
 ## Generate Allure Report
 
 After running the tests, you can generate the report using:
+
+```bash
 allure serve allure-results
+```
