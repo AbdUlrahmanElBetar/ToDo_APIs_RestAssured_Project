@@ -89,7 +89,7 @@ public class ToDoTest {
 
     @Story("Delete ToDo")
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Verify that a user can delete an existing ToDo item successfully")
+    @Description("Verify that a user can delete an existing ToDo item successfully Without Errors")
     @Test(description = "User should be able to delete a ToDo")
     public void shouldBeAbleToDeleteToDo() {
         String token = UserSteps.getToken();
