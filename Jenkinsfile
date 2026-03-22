@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/AbdUlrahmanElBetar/ToDo_APIs_RestAssured_Project.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 sh 'mvn clean compile'
