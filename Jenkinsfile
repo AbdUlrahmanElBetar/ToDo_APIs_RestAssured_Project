@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3'
+        maven 'Maven3'  // تأكد انك عامل Tool باسم Maven3 في Jenkins
     }
 
     stages {
@@ -16,10 +16,13 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    def mvnCmd = isUnix() ? 'mvn' : 'mvn.cmd'
-                    echo "🔨 Building the project..."
-                    sh("${mvnCmd} clean compile")   // Unix
-                    // bat("${mvnCmd} clean compile") // Windows, uncomment if on Windows
+                    if (isUnix()) {
+                        echo "🔨 Building on Unix..."
+                        sh 'mvn clean compile'
+                    } else {
+                        echo "🔨 Building on Windows..."
+                        bat 'mvn.cmd clean compile'
+                    }
                 }
             }
         }
@@ -27,10 +30,13 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    def mvnCmd = isUnix() ? 'mvn' : 'mvn.cmd'
-                    echo "🧪 Running tests..."
-                    sh("${mvnCmd} test")   // Unix
-                    // bat("${mvnCmd} test") // Windows
+                    if (isUnix()) {
+                        echo "🧪 Testing on Unix..."
+                        sh 'mvn test'
+                    } else {
+                        echo "🧪 Testing on Windows..."
+                        bat 'mvn.cmd test'
+                    }
                 }
             }
             post {
@@ -43,10 +49,13 @@ pipeline {
         stage('Package') {
             steps {
                 script {
-                    def mvnCmd = isUnix() ? 'mvn' : 'mvn.cmd'
-                    echo "📦 Packaging project..."
-                    sh("${mvnCmd} package")   // Unix
-                    // bat("${mvnCmd} package") // Windows
+                    if (isUnix()) {
+                        echo "📦 Packaging on Unix..."
+                        sh 'mvn package'
+                    } else {
+                        echo "📦 Packaging on Windows..."
+                        bat 'mvn.cmd package'
+                    }
                 }
             }
         }
