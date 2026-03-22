@@ -5,10 +5,6 @@ pipeline {
         maven 'Maven3'
     }
 
-    environment {
-        MVN_CMD = isUnix() ? 'mvn' : 'mvn.cmd'
-    }
-
     stages {
 
         stage('Checkout') {
@@ -19,16 +15,23 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo "🔨 Building the project..."
-                bat("${env.MVN_CMD} clean compile") // Windows
-                // sh("${env.MVN_CMD} clean compile") for Unix, handled by MVN_CMD
+                script {
+                    def mvnCmd = isUnix() ? 'mvn' : 'mvn.cmd'
+                    echo "🔨 Building the project..."
+                    sh("${mvnCmd} clean compile")   // Unix
+                    // bat("${mvnCmd} clean compile") // Windows, uncomment if on Windows
+                }
             }
         }
 
         stage('Test') {
             steps {
-                echo "🧪 Running tests..."
-                bat("${env.MVN_CMD} test")
+                script {
+                    def mvnCmd = isUnix() ? 'mvn' : 'mvn.cmd'
+                    echo "🧪 Running tests..."
+                    sh("${mvnCmd} test")   // Unix
+                    // bat("${mvnCmd} test") // Windows
+                }
             }
             post {
                 always {
@@ -39,8 +42,12 @@ pipeline {
 
         stage('Package') {
             steps {
-                echo "📦 Packaging project..."
-                bat("${env.MVN_CMD} package")
+                script {
+                    def mvnCmd = isUnix() ? 'mvn' : 'mvn.cmd'
+                    echo "📦 Packaging project..."
+                    sh("${mvnCmd} package")   // Unix
+                    // bat("${mvnCmd} package") // Windows
+                }
             }
         }
     }
